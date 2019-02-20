@@ -1,0 +1,26 @@
+<!--
+  Copyright (C) 2018 Moblty, Inc - All Rights Reserved
+   Unauthorized copying of this file, via any medium is strictly prohibited
+   This file is property of Moblty Inc.  Contents are proprietary and confidential.
+-->
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    
+    <root level="error">
+        <appender-ref ref="STDOUT" />
+    </root>
+    
+    <logger name="io.ebean.SQL" level="TRACE" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>   
+    
+ 	<logger name="com.gounder" level="debug" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger>   
+    
+</configuration>
