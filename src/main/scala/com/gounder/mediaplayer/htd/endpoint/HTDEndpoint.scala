@@ -16,16 +16,12 @@ import akka.http.scaladsl.model.StatusCodes
 import com.gounder.mediaplayer.htd.actor.MediaPlayerActor._
 import com.gounder.mediaplayer.htd.actor.MediaPlayerActor.HTDData
 
-object HTDEndpoint extends DefaultJsonFormats {
-  
-      implicit val system = ActorSystem("broadwayctrl")
-      implicit val mat = ActorMaterializer()
-}
+
 
 class HTDEndpoint(actor: ActorRef)(implicit executionContext: ExecutionContext) extends Directives with DefaultJsonFormats with LazyLogging {
-
+      val log = logger
       implicit val timeout = Timeout(2.seconds)
-      import HTDEndpoint._
+//      import HTDEndpoint._
 
      val route = zoneCtrl ~ configPlayCtrl
       
@@ -34,10 +30,11 @@ class HTDEndpoint(actor: ActorRef)(implicit executionContext: ExecutionContext) 
         put {
           extractRequest { request =>
 
-              logUser( request, "GET", s"media/audio/$location/$zoneId/$action")
+              logUser( request, "PUT", s"media/audio/$location/$zoneId/$action")
               
               import spray.json._
               entity(as[HTDData]) { (data) => 
+                logger.debug( data.toString );
                 complete { ( actor ? HTDCommand(location, action, zoneId, Some(data))).mapTo[HTDCommandResponse] }  
               }
 
@@ -77,9 +74,9 @@ class HTDEndpoint(actor: ActorRef)(implicit executionContext: ExecutionContext) 
     def logUser( request: HttpRequest, method: String, action: String ) {
           val header = request.headers.seq.filter( p => p.name == "user")
           if( ! header.isEmpty ) {
-            println( method + " " + action + " => " + header.head  )
+            log.debug( method + " " + action + " => " + header.head  )
           }else {
-            println( method + " " + action + " => no user" )
+            log.debug( method + " " + action + " => no user" )
           }
     }
     
