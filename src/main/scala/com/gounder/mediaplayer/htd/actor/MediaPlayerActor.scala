@@ -132,26 +132,27 @@ class MediaPlayerActor extends Actor with ActorLogging {
       // 0x04 - Command Code
       // 0x57 - Data
       // ox5E - Checksum      
-      println(location, command, zoneId, data )
+      log.debug(location, command, zoneId, data )
       
       if ( zones.get(zoneId).isEmpty || htdCommands.get(command).isEmpty ) {
           
-          println( "Invlid Zone or command")
+          log.debug( "Invlid Zone or command")
           (HTDCommandResponse( "Invlid Zone or command"), None)
       } else if ( command == "volume" && ( data.isEmpty || data.get.volume.isEmpty || volumeNos.get(data.get.volume.get).isEmpty )) {
-          println( "Invlid Volume")
+          log.debug( "Invlid Volume")
           (HTDCommandResponse( "Invlid Volume"), None )
           
       } else if ( command == "input" && ( data.isEmpty || data.get.input.isEmpty || inputIds.get(data.get.input.get).isEmpty )) {
-          println( "Invlid Input")
+          log.debug( inputIds.toString );
+          log.debug( "Invlid Input")
           (HTDCommandResponse( "Invlid Input"), None)
           
       } else if ( command == "partyinput" && ( data.isEmpty || data.get.partyModeSource.isEmpty || partyInputIds.get(data.get.partyModeSource.get).isEmpty )) {
-          println( "Invlid Party Input")
+          log.debug( "Invlid Party Input")
           (HTDCommandResponse( "Invlid Party Input"), None )
           
       } else {
-        println( "Valid Command")
+        log.debug( "Valid Command")
 
             
         var zone = zones.get(zoneId).get
@@ -197,7 +198,7 @@ class MediaPlayerActor extends Actor with ActorLogging {
                 val checkSum = (cmdList.foldLeft(0) ( (_ + _) )).toShort
                 //Calculate checksum. If checksum over 255(FF) round dwon by FF
                 val cmdListChkSum = cmdList :+ {if ( checkSum > 255 ) {checkSum - 256} else {checkSum }}.toShort
-//                println ("Command List : " +  cmdListChkSum.map(_.toHexString.toUpperCase) );
+//                log.debug ("Command List : " +  cmdListChkSum.map(_.toHexString.toUpperCase) );
                 cmdListChkSum
               }
             ).toList

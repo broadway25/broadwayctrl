@@ -13,7 +13,7 @@ import scala.collection.mutable.TreeMap
 object HTDRepository extends LazyLogging {
   
 
-  case class HTDZoneConfig(zoneId: String, zoneName: String, volume: String, sstartVolume: String, input: String, power: Boolean, mute: Boolean, dnd: Boolean )
+  case class HTDZoneConfig(zoneId: String, zoneName: String, volume: String, startVolume: String, input: String, power: Boolean, mute: Boolean, dnd: Boolean )
   
   case class HTDMP3PlayerConfig(mp3PlayerPlay: Boolean, mp3PlayerStartTrack : Int, mp3PlayerRepeatLoop: Boolean)
   case class HDTConfig(  muteAllWhileApply: Boolean, zoneConfigs: List[HTDZoneConfig], mp3PlayerConfg: HTDMP3PlayerConfig, partyMode: Boolean, partyModeInput: String)
