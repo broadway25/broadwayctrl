@@ -3,7 +3,7 @@
 
 RXTX Library on Rasp PI :  sudo apt-get install librxtx-java
 
-
+sudo apt install openjdk-9-jdk
 
 To find the port :  cat /proc/tty/drivers
 
