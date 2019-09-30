@@ -17,7 +17,7 @@ To find the port :  cat /proc/tty/drivers
 
 sudo rm /var/lock/LCK..ttyUSB0;cu -l /dev/ttyUSB0 -s 115200
 
-#rc.local
+# rc.local
 
 java -Djava.library.path=/usr/lib/jni -cp /opt/gounder/conf/:/opt/gounder/apps/broadwayctrl-assembly-1.0.jar com.gounder.mediaplayer.htd.rest.MediaPlayerService 2>&1 >> /opt/gounder/logs/boradway-ctrl.log &
 
